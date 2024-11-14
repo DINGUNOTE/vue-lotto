@@ -3,16 +3,25 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/lotto">Lotto</RouterLink>
-      </nav>
-    </div>
-  </header>
+  <v-app>
+    <header>
+      <div class="wrapper">
+        <nav>
+          <RouterLink to="/">Home</RouterLink>
+          <RouterLink to="/lotto">Lotto</RouterLink>
+        </nav>
+      </div>
+    </header>
 
-  <RouterView />
+    <v-main>
+      <v-container>
+        <RouterView />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
-<style scoped></style>
+<style>
+@import 'vuetify/styles/main.css';
+@import '@mdi/font/css/materialdesignicons.css';
+</style>
