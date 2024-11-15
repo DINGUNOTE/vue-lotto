@@ -1,4 +1,4 @@
-# 0. Getting Started (시작하기) (작성중)
+# 0. Getting Started (시작하기)
 ```bash
 1. $ npm install
 2. npm run dev
