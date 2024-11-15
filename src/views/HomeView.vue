@@ -3,7 +3,8 @@ import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 
 const lottoData = ref({
-  lottoNumbers: [], // 로또 당첨 번호
+  lottoNumbers: [], // 로또 당첨 번호,
+  bonusNumber: null, // 보너스 번호
   drawDate: '', // 추첨 날짜 : YYYY-MM-DD 형식
   totalSellAmount: 0, // 총 판매 금액
   totalPrize: 0, // 1등 당첨 금액
@@ -25,10 +26,7 @@ const fetchLatestDrawNumber = async () => {
     // 최신 회차 번호를 찾을 때까지 반복
     while (low <= high) {
       mid = Math.floor((low + high) / 2)
-      // 로컬 테스트용
-      // const response = await axios.get(`/api/common.do?method=getLottoNumber&drwNo=${mid}`)
 
-      // 배포용
       const response = await axios.get(
         `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${mid}`)}`,
       )
@@ -59,22 +57,21 @@ const fetchLottoData = async (drawNumber) => {
   try {
     isLoading.value = true
 
-    // const response = await axios.get(`/api/common.do?method=getLottoNumber&drwNo=${drawNumber}`)
     const response = await axios.get(
       `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drawNumber}`)}`,
     )
     const data = JSON.parse(response.data.contents)
     if (data.returnValue === 'success') {
       lottoData.value.lottoNumbers = [
-        lottoData.value.drwtNo1,
-        lottoData.value.drwtNo2,
-        lottoData.value.drwtNo3,
-        lottoData.value.drwtNo4,
-        lottoData.value.drwtNo5,
-        lottoData.value.drwtNo6,
-        lottoData.value.bnusNo,
+        data.drwtNo1,
+        data.drwtNo2,
+        data.drwtNo3,
+        data.drwtNo4,
+        data.drwtNo5,
+        data.drwtNo6,
       ]
 
+      lottoData.value.bonusNumber = data.bnusNo
       lottoData.value.drawDate = data.drwNoDate
       lottoData.value.totalSellAmount = data.totSellamnt
       lottoData.value.totalPrize = data.firstAccumamnt
@@ -96,6 +93,7 @@ onMounted(() => {
 
 // computed를 사용해서 lottodata.value의 값을 각각 변수에 할당 및 구조 변환
 const lottoNumbers = computed(() => lottoData.value.lottoNumbers)
+const bonusNumber = computed(() => lottoData.value.bonusNumber)
 const drawDate = computed(() => {
   const date = new Date(lottoData.value.drawDate)
 
@@ -156,6 +154,9 @@ const getNumberClass = (number) => {
         <ul>
           <li v-for="(number, index) in lottoNumbers" :key="index" :class="getNumberClass(number)">
             {{ number }}
+          </li>
+          <li :class="getNumberClass(bonusNumber)">
+            {{ bonusNumber }}
           </li>
         </ul>
       </div>
