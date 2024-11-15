@@ -30,9 +30,11 @@ const fetchLatestDrawNumber = async () => {
 
       // 배포용
       const response = await axios.get(
-        `https://cors-anywhere.herokuapp.com/https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${mid}`,
+        `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${mid}`)}`,
       )
-      if (response.data.returnValue === 'success') {
+      const data = JSON.parse(response.data.contents)
+
+      if (data.returnValue === 'success') {
         low = mid + 1
         lottoData.value.latestDrawNumber = mid
       } else {
@@ -59,26 +61,25 @@ const fetchLottoData = async (drawNumber) => {
 
     // const response = await axios.get(`/api/common.do?method=getLottoNumber&drwNo=${drawNumber}`)
     const response = await axios.get(
-      `https://cors-anywhere.herokuapp.com/https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drawNumber}`,
+      `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drawNumber}`)}`,
     )
-    if (response.data.returnValue === 'success') {
-      const data = lottoData.value
-
-      data.lottoNumbers = [
-        response.data.drwtNo1,
-        response.data.drwtNo2,
-        response.data.drwtNo3,
-        response.data.drwtNo4,
-        response.data.drwtNo5,
-        response.data.drwtNo6,
-        response.data.bnusNo,
+    const data = JSON.parse(response.data.contents)
+    if (data.returnValue === 'success') {
+      lottoData.value.lottoNumbers = [
+        lottoData.value.drwtNo1,
+        lottoData.value.drwtNo2,
+        lottoData.value.drwtNo3,
+        lottoData.value.drwtNo4,
+        lottoData.value.drwtNo5,
+        lottoData.value.drwtNo6,
+        lottoData.value.bnusNo,
       ]
 
-      data.drawDate = response.data.drwNoDate
-      data.totalSellAmount = response.data.totSellamnt
-      data.totalPrize = response.data.firstAccumamnt
-      data.firstPrizeWinners = response.data.firstPrzwnerCo
-      data.latestDrawNumber = response.data.drwNo
+      lottoData.value.drawDate = data.drwNoDate
+      lottoData.value.totalSellAmount = data.totSellamnt
+      lottoData.value.totalPrize = data.firstAccumamnt
+      lottoData.value.firstPrizeWinners = data.firstPrzwnerCo
+      lottoData.value.latestDrawNumber = data.drwNo
     } else {
       errorMsg.value = '최신 당첨 회차를 불러오는 데 실패했습니다.'
     }
