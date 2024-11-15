@@ -1,8 +1,7 @@
-# 0. Getting Started (시작하기)
+# 0. Getting Started (시작하기) (작성중)
 ```bash
 1. $ npm install
-2. HomeView.vue, vite.config.js 파일 내 배포용 API 주소 대신 로컬 API 주소 사용
-3. npm run dev
+2. npm run dev
 ```
 [서비스 링크](https://dingunote.github.io/vue-lotto/)
 
