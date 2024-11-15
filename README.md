@@ -9,7 +9,7 @@ $ npm run dev
 <br/>
 
 # 1. Project Overview (프로젝트 개요)
-- 프로젝트 설명: 무작위 : Vue를 활용한 로또 번호 추출기
+- 프로젝트 설명: 무작위 : 로또 최신 당첨 회차 정보 불러오기 & 로또 당첨 번호 임의 추출
 
 <br/>
 <br/>
@@ -20,7 +20,7 @@ $ npm run dev
 <br/>
 
 
-# 3. Technology Stack (기술 스택)
+# 3. Technology Stack (기술 스택) (작성중)
 |  |  |
 |--|--|
 | HTML5 | <img src="https://github.com/user-attachments/assets/2e122e74-a28b-4ce7-aff6-382959216d31" alt="HTML5" width="100">| 
@@ -31,7 +31,7 @@ $ npm run dev
 
 
 
-# 4. Project Structure (프로젝트 구조)
+# 4. Project Structure (프로젝트 구조) (작성중)
 ```plaintext
 project/
 ├── public/
