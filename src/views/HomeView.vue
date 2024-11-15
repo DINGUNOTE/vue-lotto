@@ -25,7 +25,13 @@ const fetchLatestDrawNumber = async () => {
     // 최신 회차 번호를 찾을 때까지 반복
     while (low <= high) {
       mid = Math.floor((low + high) / 2)
-      const response = await axios.get(`/api/common.do?method=getLottoNumber&drwNo=${mid}`)
+      // 로컬 테스트용
+      // const response = await axios.get(`/api/common.do?method=getLottoNumber&drwNo=${mid}`)
+
+      // 배포용
+      const response = await axios.get(
+        `https://cors-anywhere.herokuapp.com/https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${mid}`,
+      )
       if (response.data.returnValue === 'success') {
         low = mid + 1
         lottoData.value.latestDrawNumber = mid
@@ -51,7 +57,10 @@ const fetchLottoData = async (drawNumber) => {
   try {
     isLoading.value = true
 
-    const response = await axios.get(`/api/common.do?method=getLottoNumber&drwNo=${drawNumber}`)
+    // const response = await axios.get(`/api/common.do?method=getLottoNumber&drwNo=${drawNumber}`)
+    const response = await axios.get(
+      `https://cors-anywhere.herokuapp.com/https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drawNumber}`,
+    )
     if (response.data.returnValue === 'success') {
       const data = lottoData.value
 
@@ -127,7 +136,7 @@ const getNumberClass = (number) => {
   <section>
     <div v-if="isLoading" class="text-center">최신 회차를 검색중입니다.</div>
     <div v-else>
-      <div v-if="errorMsg">{{ errorMsg }}</div>
+      <div v-if="errorMsg" class="text-center">{{ errorMsg }}</div>
       <div v-else class="lotto-info">
         <h1>
           {{ latestDrawNumber }}회 당첨결과<br />

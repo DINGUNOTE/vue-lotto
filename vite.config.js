@@ -13,13 +13,14 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://www.dhlottery.co.kr',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
-  },
+  // 로컬 CORS 방지를 위한 설정
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'https://www.dhlottery.co.kr',
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/api/, ''),
+  //     },
+  //   },
+  // },
 })
