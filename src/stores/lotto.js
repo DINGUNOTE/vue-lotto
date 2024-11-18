@@ -13,9 +13,12 @@ export const useLottoStore = defineStore('lotto', () => {
   const latestDrawNumber = ref(null) // 최신 회차 번호
   const errorMsg = ref('') // 에러 메세지
   const isLoading = ref(false) // 회차 탐색 중 여부
+  const isFetched = ref(false) // 데이터 불러오기 성공 여부
 
   // 최신 회차 검색
   const fetchLatestDrawNumber = async () => {
+    if (isFetched.value) return
+
     try {
       isLoading.value = true
 
@@ -40,6 +43,7 @@ export const useLottoStore = defineStore('lotto', () => {
       // 최신 회차 번호를 찾았다면 해당 회차의 당첨 번호를 불러옴
       if (latestDrawNumber.value) {
         await fetchLottoData(latestDrawNumber.value)
+        isFetched.value = true
       } else {
         errorMsg.value = '최신 회차 번호를 불러오는 데 실패했습니다.'
       }
