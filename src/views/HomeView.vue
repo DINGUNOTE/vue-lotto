@@ -27,12 +27,12 @@ const getNumberClass = (number) => {
       <div v-else class="lotto-info">
         <h1>
           {{ lottoStore.latestDrawNumber }}회 당첨결과<br />
-          <span class="draw-date">({{ lottoStore.drawDate }} 추첨)</span>
+          <span class="draw-date">({{ lottoStore.formattedDrawDate }} 추첨)</span>
         </h1>
         <v-list lines="two">
-          <v-list-item title="총 판매금액" :subtitle="lottoStore.totalSellAmount" />
+          <v-list-item title="총 판매금액" :subtitle="lottoStore.formattedTotalSellAmount" />
 
-          <v-list-item title="1등 당첨금액" :subtitle="lottoStore.totalPrize" />
+          <v-list-item title="1등 당첨금액" :subtitle="lottoStore.formattedTotalPrize" />
 
           <v-list-item title="1등 당첨게임 수" :subtitle="lottoStore.firstPrizeWinners" />
 
