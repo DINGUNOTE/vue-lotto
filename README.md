@@ -1,8 +1,8 @@
 # 0. Getting Started (시작하기)
 
 ```bash
-1. $ npm install
-2. npm run dev
+$ npm install
+$ npm run dev
 ```
 
 [서비스 링크](https://dingunote.github.io/vue-lotto/)
