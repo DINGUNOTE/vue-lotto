@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import BallComponent from '@/components/BallComponent.vue'
+</script>
 
 <template>
   <section>
@@ -15,16 +17,18 @@
         </div>
       </h1>
 
-      <v-text-field
-        variant="underlined"
-        type="number"
-        placeholder="고정 번호 입력"
-        clearable
-      ></v-text-field>
+      <div>
+        <v-text-field
+          variant="underlined"
+          type="number"
+          placeholder="고정 번호 입력"
+          clearable
+        ></v-text-field>
+      </div>
 
       <v-card>
         <ul>
-          <li></li>
+          <BallComponent number="10" />
         </ul>
       </v-card>
     </article>

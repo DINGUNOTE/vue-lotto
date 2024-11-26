@@ -2,21 +2,13 @@
 import { onMounted } from 'vue'
 import { useLottoStore } from '@/stores/lotto'
 
+import BallComponent from '@/components/BallComponent.vue'
+
 const lottoStore = useLottoStore()
 
 onMounted(() => {
   lottoStore.fetchLatestDrawNumber()
 })
-
-// 공 색깔 부여
-const getNumberClass = (number) => {
-  if (number >= 1 && number <= 10) return 'yellow'
-  if (number >= 11 && number <= 20) return 'blue'
-  if (number >= 21 && number <= 30) return 'red'
-  if (number >= 31 && number <= 40) return 'grey'
-  if (number >= 41 && number <= 45) return 'green'
-  return ''
-}
 </script>
 
 <template>
@@ -40,16 +32,17 @@ const getNumberClass = (number) => {
         </v-list>
 
         <ul>
-          <li
+          <BallComponent
             v-for="(number, index) in lottoStore.lottoNumbers"
             :key="index"
-            :class="getNumberClass(number)"
+            :number="number"
           >
             {{ number }}
-          </li>
-          <li :class="getNumberClass(lottoStore.bonusNumber)">
+          </BallComponent>
+
+          <BallComponent :number="lottoStore.bonusNumber">
             {{ lottoStore.bonusNumber }}
-          </li>
+          </BallComponent>
         </ul>
       </div>
     </div>
@@ -83,34 +76,6 @@ const getNumberClass = (number) => {
     gap: 0.5rem;
 
     li {
-      display: flex;
-      align-content: center;
-      justify-content: center;
-      width: 3rem;
-      height: 3rem;
-      color: #fff;
-      line-height: 3rem;
-      font-weight: 600;
-      text-shadow: 0px 0px 3px rgba(73, 57, 0, 0.8);
-      border-radius: 50%;
-
-      &.yellow {
-        background-color: #fbc400;
-      }
-      &.blue {
-        background-color: #69c8f2;
-      }
-
-      &.red {
-        background-color: #ff7272;
-      }
-      &.grey {
-        background-color: #aaa;
-      }
-      &.green {
-        background-color: #b0d840;
-      }
-
       &:last-child {
         position: relative;
         margin-left: 3rem;
