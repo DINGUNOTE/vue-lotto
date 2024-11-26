@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { useLottoStore } from '@/stores/lotto'
 
 import BallComponent from '@/components/BallComponent.vue'
+import AlertComponent from '@/components/AlertComponent.vue'
 
 const lottoStore = useLottoStore()
 
@@ -12,6 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <p class="red">이전 회차 보기, 다음 회차 보기 기능 추가 예정</p>
   <section>
     <div v-if="lottoStore.isLoading" class="text-center">최신 회차를 검색중입니다.</div>
     <div v-else>
@@ -47,6 +49,8 @@ onMounted(() => {
       </div>
     </div>
   </section>
+
+  <AlertComponent />
 </template>
 
 <style lang="scss" scoped>

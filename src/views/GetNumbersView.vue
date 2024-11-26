@@ -18,7 +18,7 @@ const excludedNumberInput = ref('')
         <div class="tooltip-box">
           <v-icon size="24"> mdi-help-circle-outline </v-icon>
           <v-tooltip activator="parent" location="top"
-            >해당 번호를 고정으로 포함시켜서 번호를 추첨합니다.<br />최소 1개부터 최대 5개의 번호를
+            >해당 번호를 고정으로 포함시켜서 번호를 추첨합니다.<br />최소 0개부터 최대 5개의 번호를
             선택 가능합니다.</v-tooltip
           >
         </div>
@@ -34,12 +34,18 @@ const excludedNumberInput = ref('')
         @click:append-inner="lottoStore.addFixedNumber(parseInt(fixedNumberInput, 10))"
       />
 
-      <v-card>
-        <ul>
+      <v-card class="ball-container">
+        <template v-if="lottoStore.fixedNumbers.length === 0">
+          <p>선택된 고정 번호가 없습니다.</p>
+        </template>
+
+        <ul v-else>
           <BallComponent
             v-for="(number, index) in lottoStore.fixedNumbers"
             :key="index"
             :number="number"
+            :editable="true"
+            @remove-ball="lottoStore.removeFixedNumber"
           />
         </ul>
       </v-card>
@@ -68,12 +74,18 @@ const excludedNumberInput = ref('')
         @click:append-inner="lottoStore.addExcludedNumber(parseInt(excludedNumberInput, 10))"
       />
 
-      <v-card>
-        <ul>
+      <v-card class="ball-container">
+        <template v-if="lottoStore.excludedNumbers.length === 0">
+          <p>선택된 제외 번호가 없습니다.</p>
+        </template>
+
+        <ul v-else>
           <BallComponent
             v-for="(number, index) in lottoStore.excludedNumbers"
             :key="index"
             :number="number"
+            :editable="true"
+            @remove-ball="lottoStore.removeExcludedNumber"
           />
         </ul>
       </v-card>
@@ -94,5 +106,20 @@ h1 {
   display: flex;
   align-items: center;
   gap: 0.125rem;
+}
+
+.ball-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 5rem;
+}
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 </style>

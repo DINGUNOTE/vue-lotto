@@ -6,7 +6,13 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  editable: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+const emit = defineEmits(['removeBall'])
 
 // 공 색을 결정하는 computed
 const getNumberClass = computed(() => {
@@ -17,14 +23,29 @@ const getNumberClass = computed(() => {
   if (props.number >= 41 && props.number <= 45) return 'green'
   return ''
 })
+
+const handleRemove = () => {
+  emit('removeBall', props.number)
+}
 </script>
 
 <template>
-  <li :class="getNumberClass">{{ number }}</li>
+  <li :class="getNumberClass">
+    {{ number }}
+
+    <v-btn
+      v-if="props.editable"
+      @click.stop="handleRemove"
+      class="btn-remove"
+      density="compact"
+      icon="mdi-close-circle"
+    />
+  </li>
 </template>
 
 <style lang="scss" scoped>
 li {
+  position: relative;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -52,5 +73,12 @@ li {
   &.green {
     background-color: #b0d840;
   }
+}
+
+.btn-remove {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  color: #000;
 }
 </style>

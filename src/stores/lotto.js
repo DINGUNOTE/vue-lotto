@@ -29,7 +29,7 @@ export const useLottoStore = defineStore('lotto', () => {
       isLoading.value = true
 
       let low = 1100 // 검색 시작할 회차
-      let high = 1500 // 검색 마지막 회차
+      let high = 1200 // 검색 마지막 회차
       let mid // 현재 검색 회차
 
       // 최신 회차 번호를 찾을 때까지 반복
@@ -95,7 +95,12 @@ export const useLottoStore = defineStore('lotto', () => {
 
   // 고정 번호 추가
   const addFixedNumber = (number) => {
-    if (number < 1 || number > 45) {
+    if (fixedNumbers.value.length >= 5) {
+      setAlertMessage('고정 번호는 최대 5개까지 입력 가능합니다.')
+      return
+    }
+
+    if (isNaN(number) || number < 1 || number > 45) {
       setAlertMessage('1부터 45 사이의 숫자를 입력해주세요.')
       return
     }
@@ -107,7 +112,12 @@ export const useLottoStore = defineStore('lotto', () => {
 
   // 제외 번호 추가
   const addExcludedNumber = (number) => {
-    if (number < 1 || number > 45) {
+    if (fixedNumbers.value.length >= 38) {
+      setAlertMessage('제외 번호는 최대 38개까지 입력 가능합니다.')
+      return
+    }
+
+    if (isNaN(number) || number < 1 || number > 45) {
       setAlertMessage('1부터 45 사이의 숫자를 입력해주세요.')
       return
     }
@@ -115,6 +125,16 @@ export const useLottoStore = defineStore('lotto', () => {
     if (excludedNumbers.value.length < 38 && !excludedNumbers.value.includes(number)) {
       excludedNumbers.value.push(number)
     }
+  }
+
+  // 고정 번호 삭제
+  const removeFixedNumber = (number) => {
+    fixedNumbers.value = fixedNumbers.value.filter((num) => num !== number)
+  }
+
+  // 제외 번호 삭제
+  const removeExcludedNumber = (number) => {
+    excludedNumbers.value = excludedNumbers.value.filter((num) => num !== number)
   }
 
   // 알림 메세지 설정
@@ -163,5 +183,7 @@ export const useLottoStore = defineStore('lotto', () => {
     excludedNumbers,
     addFixedNumber,
     addExcludedNumber,
+    removeFixedNumber,
+    removeExcludedNumber,
   }
 })

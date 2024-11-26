@@ -10,7 +10,7 @@ const { isShowAlert, alertMessage, clearAlertMessage } = toRefs(lottoStore)
 <template>
   <v-overlay v-model="isShowAlert" persistent scroll-strategy="block" class="alert-container">
     <v-alert
-      type="error"
+      type="warning"
       max-width="400"
       @click:close="clearAlertMessage"
       closable
