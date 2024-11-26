@@ -1,5 +1,12 @@
 <script setup>
+import { ref } from 'vue'
+import { useLottoStore } from '@/stores/lotto'
 import BallComponent from '@/components/BallComponent.vue'
+import AlertComponent from '@/components/AlertComponent.vue'
+
+const lottoStore = useLottoStore()
+const fixedNumberInput = ref('')
+const excludedNumberInput = ref('')
 </script>
 
 <template>
@@ -17,18 +24,23 @@ import BallComponent from '@/components/BallComponent.vue'
         </div>
       </h1>
 
-      <div>
-        <v-text-field
-          variant="underlined"
-          type="number"
-          placeholder="고정 번호 입력"
-          clearable
-        ></v-text-field>
-      </div>
+      <v-text-field
+        v-model="fixedNumberInput"
+        variant="underlined"
+        type="number"
+        placeholder="고정 번호 입력"
+        clearable
+        append-inner-icon="mdi-plus-circle"
+        @click:append-inner="lottoStore.addFixedNumber(parseInt(fixedNumberInput, 10))"
+      />
 
       <v-card>
         <ul>
-          <BallComponent number="10" />
+          <BallComponent
+            v-for="(number, index) in lottoStore.fixedNumbers"
+            :key="index"
+            :number="number"
+          />
         </ul>
       </v-card>
     </article>
@@ -40,12 +52,34 @@ import BallComponent from '@/components/BallComponent.vue'
         <div class="tooltip-box">
           <v-icon size="24"> mdi-help-circle-outline </v-icon>
           <v-tooltip activator="parent" location="top"
-            >해당 번호를 제외하고 번호를 추첨합니다.<br />최소 0개부터 최대 39개까지 선택
+            >해당 번호를 제외하고 번호를 추첨합니다.<br />최소 0개부터 최대 38개까지 선택
             가능합니다.</v-tooltip
           >
         </div>
       </h1>
+
+      <v-text-field
+        v-model="excludedNumberInput"
+        variant="underlined"
+        type="number"
+        placeholder="제외 번호 입력"
+        clearable
+        append-inner-icon="mdi-plus-circle"
+        @click:append-inner="lottoStore.addExcludedNumber(parseInt(excludedNumberInput, 10))"
+      />
+
+      <v-card>
+        <ul>
+          <BallComponent
+            v-for="(number, index) in lottoStore.excludedNumbers"
+            :key="index"
+            :number="number"
+          />
+        </ul>
+      </v-card>
     </article>
+
+    <AlertComponent />
   </section>
 </template>
 

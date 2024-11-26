@@ -5,7 +5,7 @@ import { formatDate, formatCurrency } from '@/utils'
 
 export const useLottoStore = defineStore('lotto', () => {
   const lottoNumbers = ref([]) // 로또 당첨 번호
-  const bonusNumber = ref(null) // 보너스 번호
+  const bonusNumber = ref(0) // 보너스 번호
   const drawDate = ref('') // 추첨 날짜 : YYYY-MM-DD 형식
   const totalSellAmount = ref(0) // 총 판매 금액
   const totalPrize = ref(0) // 1등 당첨 금액
@@ -14,6 +14,12 @@ export const useLottoStore = defineStore('lotto', () => {
   const errorMsg = ref('') // 에러 메세지
   const isLoading = ref(false) // 회차 탐색 중 여부
   const isFetched = ref(false) // 데이터 불러오기 성공 여부
+
+  const fixedNumbers = ref([]) // 고정 번호 리스트
+  const excludedNumbers = ref([]) // 제외 번호 리스트
+
+  const alertMessage = ref('') // 알림 메세지
+  const isShowAlert = ref(false) // 알림 표시 여부
 
   // 최신 회차 검색
   const fetchLatestDrawNumber = async () => {
@@ -54,7 +60,7 @@ export const useLottoStore = defineStore('lotto', () => {
     }
   }
 
-  // 최신 회차 번호를 받아서 당첨 번호 불러오기
+  // 당첨 데이터 불러오기
   const fetchLottoData = async (drawNumber) => {
     try {
       isLoading.value = true
@@ -87,6 +93,42 @@ export const useLottoStore = defineStore('lotto', () => {
     }
   }
 
+  // 고정 번호 추가
+  const addFixedNumber = (number) => {
+    if (number < 1 || number > 45) {
+      setAlertMessage('1부터 45 사이의 숫자를 입력해주세요.')
+      return
+    }
+
+    if (fixedNumbers.value.length < 5 && !fixedNumbers.value.includes(number)) {
+      fixedNumbers.value.push(number)
+    }
+  }
+
+  // 제외 번호 추가
+  const addExcludedNumber = (number) => {
+    if (number < 1 || number > 45) {
+      setAlertMessage('1부터 45 사이의 숫자를 입력해주세요.')
+      return
+    }
+
+    if (excludedNumbers.value.length < 38 && !excludedNumbers.value.includes(number)) {
+      excludedNumbers.value.push(number)
+    }
+  }
+
+  // 알림 메세지 설정
+  const setAlertMessage = (message) => {
+    alertMessage.value = message
+    isShowAlert.value = true
+  }
+
+  // 알림 메세지 초기화
+  const clearAlertMessage = () => {
+    alertMessage.value = ''
+    isShowAlert.value = false
+  }
+
   // 데이터 포맷팅
   const formattedDrawDate = computed(() => formatDate(drawDate.value))
   const formattedTotalSellAmount = computed(() => formatCurrency(totalSellAmount.value))
@@ -107,11 +149,19 @@ export const useLottoStore = defineStore('lotto', () => {
     latestDrawNumber,
     errorMsg,
     isLoading,
+    alertMessage,
+    isShowAlert,
     fetchLatestDrawNumber,
     fetchLottoData,
     formattedDrawDate,
     formattedTotalSellAmount,
     formattedTotalPrize,
+    setAlertMessage,
+    clearAlertMessage,
     prizePerGame,
+    fixedNumbers,
+    excludedNumbers,
+    addFixedNumber,
+    addExcludedNumber,
   }
 })
