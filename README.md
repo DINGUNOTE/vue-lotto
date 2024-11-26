@@ -53,9 +53,11 @@ project/
 │   │   └── main.css               - 최종 적용 스타일 구성
 │   ├── components/                # 컴포넌트 폴더
 │   │   ├── HeaderComponent.vue    - App Header 컴포넌트
+│   │   ├── AlertComponent.vue     - 알림 메세지 컴포넌트
+│   │   ├── BallComponent.vue      - 로또 공 컴포넌트
 │   │   └── FooterComponent.vue    - App Footer 컴포넌트
 │   ├── router/                    #
-│   ├── plugins/                   # 기타 플러그인 관련 폴더(vuetify.js)
+│   ├── plugins/                   # 기타 플러그인 관련 폴더
 │   │   └── vuetify.js             - Vuetify 관련 설정 파일
 │   ├── store/                     # App 상태 관리 폴더
 │   │   └── index.js               - App 내에 전반적으로 사용되는 상태 값, 공통 함수 관리
