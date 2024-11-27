@@ -33,7 +33,6 @@ $ npm run dev
 | Javascript | <img src="https://github.com/user-attachments/assets/4a7d7074-8c71-48b4-8652-7431477669d1" alt="Javascript" width="100"> |
 | Vue        | <img src="https://github.com/user-attachments/assets/62f63000-5ea5-484e-8a3b-4ec5b2af7258" alt="Vue" width="100">        |
 
-- vue-router
 - Pinia
 - Axios
 - Vuetify3
