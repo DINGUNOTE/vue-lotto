@@ -110,8 +110,7 @@ export const useLottoStore = defineStore('lotto', () => {
     }
 
     if (fixedNumbers.value.length < 5 && !fixedNumbers.value.includes(number)) {
-      fixedNumbers.value.push(number)
-      sortArr(fixedNumbers.value)
+      fixedNumbers.value = sortArr([...fixedNumbers.value, number])
     }
   }
 
@@ -132,21 +131,18 @@ export const useLottoStore = defineStore('lotto', () => {
     }
 
     if (excludedNumbers.value.length < 37 && !excludedNumbers.value.includes(number)) {
-      excludedNumbers.value.push(number)
-      sortArr(excludedNumbers.value)
+      excludedNumbers.value = sortArr([...excludedNumbers.value, number])
     }
   }
 
   // 고정 번호 삭제
   const removeFixedNumber = (number) => {
-    fixedNumbers.value = fixedNumbers.value.filter((num) => num !== number)
-    sortArr(fixedNumbers.value)
+    fixedNumbers.value = sortArr(fixedNumbers.value.filter((n) => n !== number))
   }
 
   // 제외 번호 삭제
   const removeExcludedNumber = (number) => {
-    excludedNumbers.value = excludedNumbers.value.filter((num) => num !== number)
-    sortArr(excludedNumbers.value)
+    excludedNumbers.value = sortArr(excludedNumbers.value.filter((n) => n !== number))
   }
 
   // 알림 메세지 설정
