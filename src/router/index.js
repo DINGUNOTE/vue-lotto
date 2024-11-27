@@ -17,6 +17,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/GetNumbersView.vue'),
     },
+    // 존재하지 않는 경로로 접근했을 때 홈으로 리다이렉트(직접 상세 페이지 url 입력, 상세 페이지에서 새로고침 등)
+    {
+      path: '/:catchAll(.*)',
+      redirect: '/',
+    },
   ],
 })
 
