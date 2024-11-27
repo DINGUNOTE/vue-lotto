@@ -12,12 +12,14 @@ $ npm run dev
 
 # 1. Project Overview (프로젝트 개요)
 
-- 프로젝트 설명: 로또 최신 당첨 회차 정보 불러오기 & 로또 당첨 번호 임의 추출
+- 프로젝트 설명: 로또 최신 당첨 회차 정보 불러오기 & 로또 당첨 번호 임의 추출, 로또 번호 통계 보기
 
 <br/>
 <br/>
 
 # 2. Key Features (주요 기능)
+
+- 당첨회차 이전회차, 다음회차 보기 기능 (추가 예정)
 
 <br/>
 <br/>
@@ -53,9 +55,11 @@ project/
 │   │   └── main.css               - 최종 적용 스타일 구성
 │   ├── components/                # 컴포넌트 폴더
 │   │   ├── HeaderComponent.vue    - App Header 컴포넌트
+│   │   ├── AlertComponent.vue     - 알림 메세지 컴포넌트
+│   │   ├── BallComponent.vue      - 로또 공 컴포넌트
 │   │   └── FooterComponent.vue    - App Footer 컴포넌트
 │   ├── router/                    #
-│   ├── plugins/                   # 기타 플러그인 관련 폴더(vuetify.js)
+│   ├── plugins/                   # 기타 플러그인 관련 폴더
 │   │   └── vuetify.js             - Vuetify 관련 설정 파일
 │   ├── store/                     # App 상태 관리 폴더
 │   │   └── index.js               - App 내에 전반적으로 사용되는 상태 값, 공통 함수 관리
