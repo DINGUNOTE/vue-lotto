@@ -113,6 +113,10 @@ h1 {
   align-items: center;
   justify-content: center;
   min-height: 5rem;
+
+  p {
+    color: #666;
+  }
 }
 
 ul {
