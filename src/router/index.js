@@ -25,12 +25,4 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.length === 0) {
-    next('/')
-  } else {
-    next()
-  }
-})
-
 export default router
