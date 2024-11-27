@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { fetchLottoNumber } from '@/api'
-import { formatDate, formatCurrency } from '@/utils'
+import { formatDate, formatCurrency, sortArr } from '@/utils'
 
 export const useLottoStore = defineStore('lotto', () => {
   const lottoNumbers = ref([]) // 로또 당첨 번호
@@ -111,6 +111,7 @@ export const useLottoStore = defineStore('lotto', () => {
 
     if (fixedNumbers.value.length < 5 && !fixedNumbers.value.includes(number)) {
       fixedNumbers.value.push(number)
+      sortArr(fixedNumbers.value)
     }
   }
 
@@ -120,8 +121,8 @@ export const useLottoStore = defineStore('lotto', () => {
       setAlertMessage('이미 등록된 번호입니다.')
     }
 
-    if (excludedNumbers.value.length >= 38) {
-      setAlertMessage('제외 번호는 최대 38개까지 입력 가능합니다.')
+    if (excludedNumbers.value.length >= 37) {
+      setAlertMessage('제외 번호는 최대 37개까지 입력 가능합니다.')
       return
     }
 
@@ -130,19 +131,22 @@ export const useLottoStore = defineStore('lotto', () => {
       return
     }
 
-    if (excludedNumbers.value.length < 38 && !excludedNumbers.value.includes(number)) {
+    if (excludedNumbers.value.length < 37 && !excludedNumbers.value.includes(number)) {
       excludedNumbers.value.push(number)
+      sortArr(excludedNumbers.value)
     }
   }
 
   // 고정 번호 삭제
   const removeFixedNumber = (number) => {
     fixedNumbers.value = fixedNumbers.value.filter((num) => num !== number)
+    sortArr(fixedNumbers.value)
   }
 
   // 제외 번호 삭제
   const removeExcludedNumber = (number) => {
     excludedNumbers.value = excludedNumbers.value.filter((num) => num !== number)
+    sortArr(excludedNumbers.value)
   }
 
   // 알림 메세지 설정

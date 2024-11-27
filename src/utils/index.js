@@ -8,3 +8,8 @@ export const formatDate = (dateString) => {
   const date = new Date(dateString)
   return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
 }
+
+// 배열 오름차순 정렬
+export const sortArr = (arr) => {
+  return arr.slice().sort((a, b) => a - b)
+}

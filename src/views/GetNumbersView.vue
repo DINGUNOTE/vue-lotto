@@ -58,7 +58,7 @@ const excludedNumberInput = ref('')
         <div class="tooltip-box">
           <v-icon size="24"> mdi-help-circle-outline </v-icon>
           <v-tooltip activator="parent" location="top"
-            >해당 번호를 제외하고 번호를 추첨합니다.<br />최소 0개부터 최대 38개까지 선택
+            >해당 번호를 제외하고 번호를 추첨합니다.<br />최소 0개부터 최대 37개까지 선택
             가능합니다.</v-tooltip
           >
         </div>
@@ -90,6 +90,11 @@ const excludedNumberInput = ref('')
         </ul>
       </v-card>
     </article>
+
+    <div class="btn-group d-flex justify-center ga-2">
+      <v-btn variant="outlined" min-width="150">추천번호 뽑기</v-btn>
+      <v-btn variant="outlined" min-width="150">통계 보기</v-btn>
+    </div>
 
     <AlertComponent />
   </section>
