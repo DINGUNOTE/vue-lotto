@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useLottoStore } from '@/stores/lotto'
+import { useLottoStore } from '@/stores'
 import { sortArr } from '@/utils'
 import BallComponent from './BallComponent.vue'
 

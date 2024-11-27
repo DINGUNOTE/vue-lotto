@@ -1,6 +1,6 @@
 <script setup>
 import { toRefs } from 'vue'
-import { useLottoStore } from '@/stores/lotto'
+import { useLottoStore } from '@/stores'
 
 const lottoStore = useLottoStore()
 
