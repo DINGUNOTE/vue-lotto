@@ -99,6 +99,11 @@ export const useLottoStore = defineStore('lotto', () => {
       setAlertMessage('이미 등록된 번호입니다.')
     }
 
+    if (excludedNumbers.value.includes(number)) {
+      setAlertMessage('해당 번호는 이미 제외 번호에 포함되어 있습니다.')
+      return
+    }
+
     if (fixedNumbers.value.length >= 5) {
       setAlertMessage('고정 번호는 최대 5개까지 입력 가능합니다.')
       return
@@ -120,8 +125,13 @@ export const useLottoStore = defineStore('lotto', () => {
       setAlertMessage('이미 등록된 번호입니다.')
     }
 
-    if (excludedNumbers.value.length >= 37) {
-      setAlertMessage('제외 번호는 최대 37개까지 입력 가능합니다.')
+    if (fixedNumbers.value.includes(number)) {
+      setAlertMessage('해당 번호는 이미 등록 번호에 포함되어 있습니다.')
+      return
+    }
+
+    if (excludedNumbers.value.length >= 38) {
+      setAlertMessage('제외 번호는 최대 38개까지 입력 가능합니다.')
       return
     }
 
@@ -130,7 +140,7 @@ export const useLottoStore = defineStore('lotto', () => {
       return
     }
 
-    if (excludedNumbers.value.length < 37 && !excludedNumbers.value.includes(number)) {
+    if (excludedNumbers.value.length < 38 && !excludedNumbers.value.includes(number)) {
       excludedNumbers.value = sortArr([...excludedNumbers.value, number])
     }
   }
