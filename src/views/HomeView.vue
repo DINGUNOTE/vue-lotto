@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useLottoStore } from '@/stores/lotto'
+import { useLottoStore } from '@/stores'
 
 import BallComponent from '@/components/BallComponent.vue'
 import AlertComponent from '@/components/AlertComponent.vue'
