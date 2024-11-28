@@ -21,6 +21,9 @@ export const useLottoStore = defineStore('lotto', () => {
   const alertMessage = ref('') // 알림 메세지
   const isShowAlert = ref(false) // 알림 표시 여부
 
+  const isDrawOpen = ref(false) // 추첨 Dialog 열림 닫힘 여부
+  const resultNumbers = ref([]) // 추천번호 뽑기 결과
+
   // 최신 회차 검색
   const fetchLatestDrawNumber = async () => {
     if (isFetched.value) return
@@ -167,6 +170,28 @@ export const useLottoStore = defineStore('lotto', () => {
     isShowAlert.value = false
   }
 
+  // 추천번호 생성
+  const drawNumbers = () => {
+    const availableNumbers = Array.from({ length: 45 }, (_, i) => i + 1) // 1 ~ 45까지의 숫자 배열 생성
+      .filter((n) => !fixedNumbers.value.includes(n) && !excludedNumbers.value.includes(n)) // 고정번호, 제외번호 제외
+
+    const randomNumbers = []
+
+    while (randomNumbers.length < 6 - fixedNumbers.value.length) {
+      const randomIndex = Math.floor(Math.random() * availableNumbers.length)
+      const number = availableNumbers.splice(randomIndex, 1)[0]
+      randomNumbers.push(number)
+    }
+
+    resultNumbers.value = sortArr([...fixedNumbers.value, ...randomNumbers])
+    isDrawOpen.value = true
+  }
+
+  // 추천번호 Dialog 열기
+  const openDialog = () => {
+    drawNumbers()
+  }
+
   // 데이터 포맷팅
   const formattedDrawDate = computed(() => formatDate(drawDate.value))
   const formattedTotalSellAmount = computed(() => formatCurrency(totalSellAmount.value))
@@ -189,6 +214,8 @@ export const useLottoStore = defineStore('lotto', () => {
     isLoading,
     alertMessage,
     isShowAlert,
+    isDrawOpen,
+    resultNumbers,
     fetchLatestDrawNumber,
     fetchLottoData,
     formattedDrawDate,
@@ -203,5 +230,7 @@ export const useLottoStore = defineStore('lotto', () => {
     addExcludedNumber,
     removeFixedNumber,
     removeExcludedNumber,
+    drawNumbers,
+    openDialog,
   }
 })

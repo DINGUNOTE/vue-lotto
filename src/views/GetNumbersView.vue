@@ -8,12 +8,6 @@ import DrawComponent from '@/components/DrawComponent.vue'
 const lottoStore = useLottoStore()
 const fixedNumberInput = ref('')
 const excludedNumberInput = ref('')
-
-let drawComponentRef = ref(null)
-
-const openDialog = () => {
-  drawComponentRef.value.openDialog()
-}
 </script>
 
 <template>
@@ -99,11 +93,11 @@ const openDialog = () => {
     </article>
 
     <div class="btn-group d-flex justify-center ga-2">
-      <v-btn variant="outlined" min-width="150" @click="openDialog">추천번호 뽑기</v-btn>
+      <v-btn variant="outlined" min-width="150" @click="lottoStore.openDialog">추천번호 뽑기</v-btn>
       <v-btn variant="outlined" min-width="150">통계 보기</v-btn>
     </div>
 
-    <DrawComponent ref="drawComponentRef" />
+    <DrawComponent />
     <AlertComponent />
   </section>
 </template>
