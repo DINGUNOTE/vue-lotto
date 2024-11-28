@@ -25,7 +25,6 @@ const lottoStore = useLottoStore()
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer></v-spacer>
         <v-btn color="primary" text @click="lottoStore.isDrawOpen = false">닫기</v-btn>
       </v-card-actions>
     </v-card>
@@ -37,5 +36,9 @@ ul {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+}
+
+.btn-area {
+  justify-content: center;
 }
 </style>

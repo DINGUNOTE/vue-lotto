@@ -3,7 +3,8 @@ import { ref } from 'vue'
 import { useLottoStore } from '@/stores'
 import BallComponent from '@/components/BallComponent.vue'
 import AlertComponent from '@/components/AlertComponent.vue'
-import DrawComponent from '@/views/DrawView.vue'
+import DrawView from '@/views/DrawView.vue'
+import HistoryView from './HistoryView.vue'
 
 const lottoStore = useLottoStore()
 const fixedNumberInput = ref('')
@@ -19,8 +20,8 @@ const excludedNumberInput = ref('')
         <div class="tooltip-box">
           <v-icon size="24"> mdi-help-circle-outline </v-icon>
           <v-tooltip activator="parent" location="top"
-            >해당 번호를 고정으로 포함시켜서 번호를 추첨합니다.<br />최소 0개부터 최대 5개의 번호를
-            선택 가능합니다.</v-tooltip
+            >해당 번호를 고정으로 포함시켜서 번호를 추첨합니다.<br />최소
+            0개부터 최대 5개의 번호를 선택 가능합니다.</v-tooltip
           >
         </div>
       </h1>
@@ -32,7 +33,9 @@ const excludedNumberInput = ref('')
         placeholder="고정 번호 입력"
         clearable
         append-inner-icon="mdi-plus-circle"
-        @click:append-inner="lottoStore.addFixedNumber(parseInt(fixedNumberInput, 10))"
+        @click:append-inner="
+          lottoStore.addFixedNumber(parseInt(fixedNumberInput, 10))
+        "
       />
 
       <v-card class="ball-container">
@@ -59,8 +62,8 @@ const excludedNumberInput = ref('')
         <div class="tooltip-box">
           <v-icon size="24"> mdi-help-circle-outline </v-icon>
           <v-tooltip activator="parent" location="top"
-            >해당 번호를 제외하고 번호를 추첨합니다.<br />최소 0개부터 최대 38개까지 선택
-            가능합니다.</v-tooltip
+            >해당 번호를 제외하고 번호를 추첨합니다.<br />최소 0개부터 최대
+            38개까지 선택 가능합니다.</v-tooltip
           >
         </div>
       </h1>
@@ -72,7 +75,9 @@ const excludedNumberInput = ref('')
         placeholder="제외 번호 입력"
         clearable
         append-inner-icon="mdi-plus-circle"
-        @click:append-inner="lottoStore.addExcludedNumber(parseInt(excludedNumberInput, 10))"
+        @click:append-inner="
+          lottoStore.addExcludedNumber(parseInt(excludedNumberInput, 10))
+        "
       />
 
       <v-card class="ball-container">
@@ -93,11 +98,22 @@ const excludedNumberInput = ref('')
     </article>
 
     <div class="btn-group d-flex justify-center ga-2">
-      <v-btn variant="outlined" min-width="150" @click="lottoStore.openDialog">추천번호 뽑기</v-btn>
-      <v-btn variant="outlined" min-width="150">추천번호 추첨기록</v-btn>
+      <v-btn
+        variant="outlined"
+        min-width="150"
+        @click="lottoStore.openDrawDialog"
+        >추천번호 뽑기</v-btn
+      >
+      <v-btn
+        variant="outlined"
+        min-width="150"
+        @click="lottoStore.openHistoryDialog"
+        >추천번호 추첨기록</v-btn
+      >
     </div>
 
-    <DrawComponent />
+    <DrawView />
+    <HistoryView />
     <AlertComponent />
   </section>
 </template>

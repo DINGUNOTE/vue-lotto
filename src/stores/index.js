@@ -24,6 +24,9 @@ export const useLottoStore = defineStore('lotto', () => {
   const isDrawOpen = ref(false) // 추첨 Dialog 열림 닫힘 여부
   const resultNumbers = ref([]) // 추천번호 뽑기 결과
 
+  const isHistoryOpen = ref(false) // 추첨기록 Dialog 열림 닫힘 여부
+  const history = ref([]) // 추첨기록
+
   // 최신 회차 검색
   const fetchLatestDrawNumber = async () => {
     if (isFetched.value) return
@@ -184,12 +187,17 @@ export const useLottoStore = defineStore('lotto', () => {
     }
 
     resultNumbers.value = sortArr([...fixedNumbers.value, ...randomNumbers])
+    history.value.push([...resultNumbers.value]) // 추첨기록에 추가
     isDrawOpen.value = true
   }
 
   // 추천번호 Dialog 열기
-  const openDialog = () => {
+  const openDrawDialog = () => {
     drawNumbers()
+  }
+
+  const openHistoryDialog = () => {
+    isHistoryOpen.value = true
   }
 
   // 데이터 포맷팅
@@ -215,6 +223,8 @@ export const useLottoStore = defineStore('lotto', () => {
     alertMessage,
     isShowAlert,
     isDrawOpen,
+    history,
+    isHistoryOpen,
     resultNumbers,
     fetchLatestDrawNumber,
     fetchLottoData,
@@ -231,6 +241,7 @@ export const useLottoStore = defineStore('lotto', () => {
     removeFixedNumber,
     removeExcludedNumber,
     drawNumbers,
-    openDialog,
+    openDrawDialog,
+    openHistoryDialog,
   }
 })
