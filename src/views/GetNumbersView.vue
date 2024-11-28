@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useLottoStore } from '@/stores'
 import BallComponent from '@/components/BallComponent.vue'
 import AlertComponent from '@/components/AlertComponent.vue'
-import DrawComponent from '@/components/DrawComponent.vue'
+import DrawComponent from '@/views/DrawView.vue'
 
 const lottoStore = useLottoStore()
 const fixedNumberInput = ref('')

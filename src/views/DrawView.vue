@@ -1,6 +1,6 @@
 <script setup>
 import { useLottoStore } from '@/stores'
-import BallComponent from './BallComponent.vue'
+import BallComponent from '../components/BallComponent.vue'
 
 const lottoStore = useLottoStore()
 </script>

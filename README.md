@@ -56,7 +56,6 @@ project/
 │   │   ├── HeaderComponent.vue    - App Header 컴포넌트
 │   │   ├── AlertComponent.vue     - 알림 메세지 컴포넌트
 │   │   ├── BallComponent.vue      - 로또 공 컴포넌트
-│   │   ├── DrawComponent.vue      - 로또 번호 추첨 Dialog 컴포넌트
 │   │   └── FooterComponent.vue    - App Footer 컴포넌트
 │   ├── router/                    # 페이지 라우팅 관리 폴더
 │   └── index.js                   - vue-router 설정 파일
@@ -68,7 +67,8 @@ project/
 │   │   └── index.js               - App 내에 공통적으로 사용되는 유틸 함수 관리
 │   ├── views/                     # 페이지 컴포넌트 폴더
 │   │   ├── HomeView.vue           - 메인 페이지 컴포넌트(최신 회차 로또 당첨 번호 조회)
-│   │   └── GetNumbersView.vue     - 로또 당첨 번호 뽑기 페이지 컴포넌트
+│   │   ├── GetNumbersView.vue     - 로또 당첨 번호 뽑기 페이지 컴포넌트
+│   │   └── DrawComponent.vue      - 로또 번호 추첨 결과 Dialog 컴포넌트
 │   ├── App.vue                    # App Root vue 파일
 │   └── main.js                    # App Root js 파일
 └── README.md                      # 프로젝트 개요 및 사용법
