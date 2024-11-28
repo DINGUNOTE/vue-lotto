@@ -11,6 +11,9 @@ import { RouterLink } from 'vue-router'
       <RouterLink to="/get-numbers">
         <v-btn primary>로또 번호 뽑기</v-btn>
       </RouterLink>
+      <RouterLink to="/view-stats">
+        <v-btn primary>통계 보기</v-btn>
+      </RouterLink>
     </nav>
   </v-app-bar>
 </template>
