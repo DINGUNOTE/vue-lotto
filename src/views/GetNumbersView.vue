@@ -94,7 +94,7 @@ const excludedNumberInput = ref('')
 
     <div class="btn-group d-flex justify-center ga-2">
       <v-btn variant="outlined" min-width="150" @click="lottoStore.openDialog">추천번호 뽑기</v-btn>
-      <v-btn variant="outlined" min-width="150">통계 보기</v-btn>
+      <v-btn variant="outlined" min-width="150">추천번호 추첨기록</v-btn>
     </div>
 
     <DrawComponent />

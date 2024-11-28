@@ -6,7 +6,7 @@ const lottoStore = useLottoStore()
 </script>
 
 <template>
-  <v-dialog v-model="lottoStore.isDrawOpen" width="auto">
+  <v-dialog v-model="lottoStore.isDrawOpen" width="400">
     <v-card>
       <v-card-title>추천번호 추첨 결과</v-card-title>
 
@@ -32,4 +32,10 @@ const lottoStore = useLottoStore()
   </v-dialog>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+ul {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+</style>
