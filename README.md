@@ -69,7 +69,8 @@ project/
 │   ├── views/                     # 페이지 컴포넌트 폴더
 │   │   ├── HomeView.vue           - 메인 페이지 컴포넌트(최신 회차 로또 당첨 번호 조회)
 │   │   ├── GetNumbersView.vue     - 로또 당첨 번호 뽑기 페이지 컴포넌트
-│   │   └── DrawComponent.vue      - 로또 번호 추첨 결과 Dialog 컴포넌트
+│   │   ├── DrawView.vue           - 로또 번호 추첨 결과 Dialog 컴포넌트
+│   │   └── HistoryView.vue        - 로또 번호 추첨 결과 기록 Dialog 컴포넌트
 │   ├── App.vue                    # App Root vue 파일
 │   └── main.js                    # App Root js 파일
 └── README.md                      # 프로젝트 개요 및 사용법
