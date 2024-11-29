@@ -47,6 +47,8 @@ const lottoStore = useLottoStore()
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-height: 352px;
+  overflow-y: auto;
 
   > li {
     display: flex;
