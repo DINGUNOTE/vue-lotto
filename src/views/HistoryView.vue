@@ -6,22 +6,28 @@ const lottoStore = useLottoStore()
 </script>
 
 <template>
-  <v-dialog v-model="lottoStore.isHistoryOpen" width="400">
+  <v-dialog v-model="lottoStore.isHistoryOpen" width="700">
     <v-card>
       <v-card-title>추천번호 추첨기록</v-card-title>
 
       <v-card-text>
         <ul v-if="lottoStore.history.length" class="history-list">
-          <li v-for="(numbers, index) in lottoStore.history" :key="index">
+          <li v-for="(entry, index) in lottoStore.history" :key="index">
+            <span>{{ entry.dateTime }}</span>
+
             <ul class="history-item">
               <BallComponent
-                v-for="(number, index) in numbers"
+                v-for="(number, index) in entry.numbers"
                 :key="index"
                 :number="number"
               >
                 {{ number }}
               </BallComponent>
             </ul>
+
+            <v-btn text @click="lottoStore.removeHistoryEntry(index)"
+              >삭제</v-btn
+            >
           </li>
         </ul>
 
@@ -29,9 +35,8 @@ const lottoStore = useLottoStore()
       </v-card-text>
 
       <v-card-actions>
-        <v-btn color="primary" text @click="lottoStore.isHistoryOpen = false"
-          >닫기</v-btn
-        >
+        <v-btn text @click="lottoStore.clearHistory">초기화</v-btn>
+        <v-btn text @click="lottoStore.isHistoryOpen = false">닫기</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -42,6 +47,12 @@ const lottoStore = useLottoStore()
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .history-item {

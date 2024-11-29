@@ -15,6 +15,9 @@ export const useLottoStore = defineStore('lotto', () => {
   const isLoading = ref(false) // 회차 탐색 중 여부
   const isFetched = ref(false) // 데이터 불러오기 성공 여부
 
+  const alertMessage = ref('') // 알림 메세지
+  const isShowAlert = ref(false) // 알림 표시 여부
+
   const fixedNumbers = ref(
     JSON.parse(localStorage.getItem('fixedNumbers')) || [],
   ) // 고정 번호 리스트
@@ -22,14 +25,23 @@ export const useLottoStore = defineStore('lotto', () => {
     JSON.parse(localStorage.getItem('excludedNumbers')) || [],
   ) // 제외 번호 리스트
 
-  const alertMessage = ref('') // 알림 메세지
-  const isShowAlert = ref(false) // 알림 표시 여부
-
   const isDrawOpen = ref(false) // 추첨 Dialog 열림 닫힘 여부
   const resultNumbers = ref([]) // 추천번호 뽑기 결과
 
   const isHistoryOpen = ref(false) // 추첨기록 Dialog 열림 닫힘 여부
   const history = ref(JSON.parse(localStorage.getItem('history')) || []) // 추첨기록
+
+  // 알림 메세지 설정
+  const setAlertMessage = (message) => {
+    alertMessage.value = message
+    isShowAlert.value = true
+  }
+
+  // 알림 메세지 초기화
+  const clearAlertMessage = () => {
+    alertMessage.value = ''
+    isShowAlert.value = false
+  }
 
   // 최신 회차 검색
   const fetchLatestDrawNumber = async () => {
@@ -174,18 +186,6 @@ export const useLottoStore = defineStore('lotto', () => {
     saveToLocalStorage()
   }
 
-  // 알림 메세지 설정
-  const setAlertMessage = (message) => {
-    alertMessage.value = message
-    isShowAlert.value = true
-  }
-
-  // 알림 메세지 초기화
-  const clearAlertMessage = () => {
-    alertMessage.value = ''
-    isShowAlert.value = false
-  }
-
   // 추천번호 생성
   const drawNumbers = () => {
     const availableNumbers = Array.from({ length: 45 }, (_, i) => i + 1) // 1 ~ 45까지의 숫자 배열 생성
@@ -203,9 +203,28 @@ export const useLottoStore = defineStore('lotto', () => {
     }
 
     resultNumbers.value = sortArr([...fixedNumbers.value, ...randomNumbers])
-    history.value.push([...resultNumbers.value]) // 추첨기록에 추가
+
+    const currentTime = new Date()
+    const drawDateTime = `${currentTime.toLocaleDateString()} ${currentTime.toLocaleTimeString()}`
+
+    history.value.push({
+      dateTime: drawDateTime,
+      numbers: [...resultNumbers.value],
+    }) // 추첨기록에 추가
     saveToLocalStorage()
     isDrawOpen.value = true
+  }
+
+  // 추첨 기록에서 기록 삭제
+  const removeHistoryEntry = (index) => {
+    history.value.splice(index, 1)
+    saveToLocalStorage()
+  }
+
+  // 기록 초기화
+  const clearHistory = () => {
+    history.value = []
+    saveToLocalStorage()
   }
 
   // 추천번호 Dialog 열기
@@ -272,5 +291,7 @@ export const useLottoStore = defineStore('lotto', () => {
     drawNumbers,
     openDrawDialog,
     openHistoryDialog,
+    removeHistoryEntry,
+    clearHistory,
   }
 })
