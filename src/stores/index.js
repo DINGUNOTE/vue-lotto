@@ -149,7 +149,7 @@ export const useLottoStore = defineStore('lotto', () => {
     }
 
     if (fixedNumbers.value.includes(number)) {
-      setAlertMessage('해당 번호는 이미 등록 번호에 포함되어 있습니다.')
+      setAlertMessage('해당 번호는 이미 고정 번호에 포함되어 있습니다.')
       return
     }
 
