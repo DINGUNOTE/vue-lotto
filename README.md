@@ -5,7 +5,7 @@ $ npm install
 $ npm run dev
 ```
 
-[서비스 링크](https://dingunote.github.io/vue-lotto/)
+[서비스 링크](https://zekelee.github.io/vue-lotto/)
 
 <br/>
 <br/>
@@ -18,6 +18,7 @@ $ npm run dev
 <br/>
 
 # 2. Key Features (주요 기능)
+
 1. 로또 당첨회차 당첨 정보 확인(회차 별로 확인하는 기능은 추후 추가 예정)
 2. 고정적으로 넣을 번호와, 제외할 번호를 골라서 로또 추천 번호 생성
 3. 최근 100회차 당첨 정보를 취합해서 가장 많이 나온 번호와 가장 적게 나온 번호 등 통계 확인(개발 예정)
