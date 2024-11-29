@@ -15,8 +15,12 @@ export const useLottoStore = defineStore('lotto', () => {
   const isLoading = ref(false) // 회차 탐색 중 여부
   const isFetched = ref(false) // 데이터 불러오기 성공 여부
 
-  const fixedNumbers = ref([]) // 고정 번호 리스트
-  const excludedNumbers = ref([]) // 제외 번호 리스트
+  const fixedNumbers = ref(
+    JSON.parse(localStorage.getItem('fixedNumbers')) || [],
+  ) // 고정 번호 리스트
+  const excludedNumbers = ref(
+    JSON.parse(localStorage.getItem('excludedNumbers')) || [],
+  ) // 제외 번호 리스트
 
   const alertMessage = ref('') // 알림 메세지
   const isShowAlert = ref(false) // 알림 표시 여부
@@ -25,7 +29,7 @@ export const useLottoStore = defineStore('lotto', () => {
   const resultNumbers = ref([]) // 추천번호 뽑기 결과
 
   const isHistoryOpen = ref(false) // 추첨기록 Dialog 열림 닫힘 여부
-  const history = ref([]) // 추첨기록
+  const history = ref(JSON.parse(localStorage.getItem('history')) || []) // 추첨기록
 
   // 최신 회차 검색
   const fetchLatestDrawNumber = async () => {
@@ -122,6 +126,7 @@ export const useLottoStore = defineStore('lotto', () => {
 
     if (fixedNumbers.value.length < 5 && !fixedNumbers.value.includes(number)) {
       fixedNumbers.value = sortArr([...fixedNumbers.value, number])
+      saveToLocalStorage()
     }
   }
 
@@ -146,19 +151,27 @@ export const useLottoStore = defineStore('lotto', () => {
       return
     }
 
-    if (excludedNumbers.value.length < 38 && !excludedNumbers.value.includes(number)) {
+    if (
+      excludedNumbers.value.length < 38 &&
+      !excludedNumbers.value.includes(number)
+    ) {
       excludedNumbers.value = sortArr([...excludedNumbers.value, number])
+      saveToLocalStorage()
     }
   }
 
   // 고정 번호 삭제
   const removeFixedNumber = (number) => {
     fixedNumbers.value = sortArr(fixedNumbers.value.filter((n) => n !== number))
+    saveToLocalStorage()
   }
 
   // 제외 번호 삭제
   const removeExcludedNumber = (number) => {
-    excludedNumbers.value = sortArr(excludedNumbers.value.filter((n) => n !== number))
+    excludedNumbers.value = sortArr(
+      excludedNumbers.value.filter((n) => n !== number),
+    )
+    saveToLocalStorage()
   }
 
   // 알림 메세지 설정
@@ -176,7 +189,10 @@ export const useLottoStore = defineStore('lotto', () => {
   // 추천번호 생성
   const drawNumbers = () => {
     const availableNumbers = Array.from({ length: 45 }, (_, i) => i + 1) // 1 ~ 45까지의 숫자 배열 생성
-      .filter((n) => !fixedNumbers.value.includes(n) && !excludedNumbers.value.includes(n)) // 고정번호, 제외번호 제외
+      .filter(
+        (n) =>
+          !fixedNumbers.value.includes(n) && !excludedNumbers.value.includes(n),
+      ) // 고정번호, 제외번호 제외
 
     const randomNumbers = []
 
@@ -188,6 +204,7 @@ export const useLottoStore = defineStore('lotto', () => {
 
     resultNumbers.value = sortArr([...fixedNumbers.value, ...randomNumbers])
     history.value.push([...resultNumbers.value]) // 추첨기록에 추가
+    saveToLocalStorage()
     isDrawOpen.value = true
   }
 
@@ -202,13 +219,25 @@ export const useLottoStore = defineStore('lotto', () => {
 
   // 데이터 포맷팅
   const formattedDrawDate = computed(() => formatDate(drawDate.value))
-  const formattedTotalSellAmount = computed(() => formatCurrency(totalSellAmount.value))
+  const formattedTotalSellAmount = computed(() =>
+    formatCurrency(totalSellAmount.value),
+  )
   const formattedTotalPrize = computed(() => formatCurrency(totalPrize.value))
   const prizePerGame = computed(() => {
     return firstPrizeWinners.value > 0
       ? formatCurrency(totalPrize.value / firstPrizeWinners.value)
       : '0 원'
   })
+
+  // 로컬 스토리지에 데이터 저장
+  const saveToLocalStorage = () => {
+    localStorage.setItem('fixedNumbers', JSON.stringify(fixedNumbers.value))
+    localStorage.setItem(
+      'excludedNumbers',
+      JSON.stringify(excludedNumbers.value),
+    )
+    localStorage.setItem('history', JSON.stringify(history.value))
+  }
 
   return {
     lottoNumbers,
