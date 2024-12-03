@@ -27,11 +27,11 @@ onMounted(() => {
 
 <template>
   <div v-if="lottoStore.isLoading">
-    최근 당첨 30회차의 통계를 불러오는 중입니다.
+    최근 당첨 10회차의 통계를 불러오는 중입니다.
   </div>
 
   <div v-else>
-    <h3>최근 당첨 30회차 통계</h3>
+    <h3>최근 당첨 10회차 통계</h3>
     <p>
       가장 많이 나온 번호:
       {{ lottoStore.mostFrequentNumbers }}
