@@ -148,8 +148,8 @@ export const useLottoStore = defineStore('lotto', () => {
             frequency[num - 1]++
           })
 
-          // API 요청 제한을 위해 100ms 대기
-          await new Promise((resolve) => setTimeout(resolve, 100))
+          // API 요청 제한을 위해 200ms 대기
+          await new Promise((resolve) => setTimeout(resolve, 200))
         }
       }
 
