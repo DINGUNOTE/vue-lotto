@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { fetchLottoNumber } from '@/api'
 import { formatDate, formatCurrency, sortArr } from '@/utils'
@@ -30,6 +30,11 @@ export const useLottoStore = defineStore('lotto', () => {
 
   const isHistoryOpen = ref(false) // 추첨기록 Dialog 열림 닫힘 여부
   const history = ref(JSON.parse(localStorage.getItem('history')) || []) // 추첨기록
+
+  const mostFrequentNumbers = ref([]) // 최신 100회차 당첨번호 중 가장 많이 나온 번호
+  const leastFrequentNumbers = ref([]) // 최신 100회차 당첨번호 중 가장 적게 나온 번호
+  const maxFrequency = ref(0) // 최신 100회차 당첨번호 중 가장 많이 나온 번호의 빈도수
+  const minFrequency = ref(0) // 최신 100회차 당첨번호 중 가장 적게 나온 번호의 빈도수
 
   // 알림 메세지 설정
   const setAlertMessage = (message) => {
@@ -113,6 +118,74 @@ export const useLottoStore = defineStore('lotto', () => {
     } finally {
       isLoading.value = false
     }
+  }
+
+  // 최신 100회차 당첨 번호 수집
+  const fetchLast100Draws = async () => {
+    try {
+      isLoading.value = true
+      const frequency = Array(45).fill(0)
+
+      for (let i = 0; i < 100; i++) {
+        const drawNumber = latestDrawNumber.value - i
+        const data = await fetchLottoNumber(drawNumber)
+
+        if (data.returnValue === 'success') {
+          const numbers = [
+            data.drwtNo1,
+            data.drwtNo2,
+            data.drwtNo3,
+            data.drwtNo4,
+            data.drwtNo5,
+            data.drwtNo6,
+          ]
+
+          numbers.forEach((num) => {
+            frequency[num - 1]++
+          })
+
+          // API 요청 제한을 위해 10ms 대기
+          await new Promise((resolve) => setTimeout(resolve, 10))
+        }
+      }
+
+      return frequency
+    } catch (error) {
+      errorMsg.value = `API 호출 중 오류가 발생했습니다: ${error.message}`
+      return []
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  // 최신 100회차 당첨번호 중 가장 많이 나온 번호와 가장 적게 나온 번호 찾기
+  const getMostAndLeastFrequentNumbers = async () => {
+    const frequency = await fetchLast100Draws()
+
+    if (!frequency.length) {
+      errorMsg.value = '데이터를 가져오는 데 실패했습니다.'
+      return
+    }
+
+    const mostFrequent = []
+    const leastFrequent = []
+
+    const maxFreq = Math.max(...frequency)
+    const minFreq = Math.min(...frequency)
+
+    frequency.forEach((count, index) => {
+      if (count === maxFreq) {
+        mostFrequent.push(index + 1)
+      }
+      if (count === minFreq) {
+        leastFrequent.push(index + 1)
+      }
+    })
+
+    mostFrequentNumbers.value = mostFrequent
+    leastFrequentNumbers.value = leastFrequent
+    maxFrequency.value = maxFreq
+    minFrequency.value = minFreq
   }
 
   // 고정 번호 추가
@@ -258,6 +331,10 @@ export const useLottoStore = defineStore('lotto', () => {
     localStorage.setItem('history', JSON.stringify(history.value))
   }
 
+  watch(isFetched, (newVal) => {
+    console.log('isFetched changed:', newVal)
+  })
+
   return {
     lottoNumbers,
     bonusNumber,
@@ -268,12 +345,17 @@ export const useLottoStore = defineStore('lotto', () => {
     latestDrawNumber,
     errorMsg,
     isLoading,
+    isFetched,
     alertMessage,
     isShowAlert,
     isDrawOpen,
     history,
     isHistoryOpen,
     resultNumbers,
+    mostFrequentNumbers,
+    leastFrequentNumbers,
+    maxFrequency,
+    minFrequency,
     fetchLatestDrawNumber,
     fetchLottoData,
     formattedDrawDate,
@@ -293,5 +375,7 @@ export const useLottoStore = defineStore('lotto', () => {
     openHistoryDialog,
     removeHistoryEntry,
     clearHistory,
+    fetchLast100Draws,
+    getMostAndLeastFrequentNumbers,
   }
 })
