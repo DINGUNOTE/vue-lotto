@@ -31,10 +31,10 @@ export const useLottoStore = defineStore('lotto', () => {
   const isHistoryOpen = ref(false) // 추첨기록 Dialog 열림 닫힘 여부
   const history = ref(JSON.parse(localStorage.getItem('history')) || []) // 추첨기록
 
-  const mostFrequentNumbers = ref([]) // 최신 50회차 당첨번호 중 가장 많이 나온 번호
-  const leastFrequentNumbers = ref([]) // 최신 50회차 당첨번호 중 가장 적게 나온 번호
-  const maxFrequency = ref(0) // 최신 50회차 당첨번호 중 가장 많이 나온 번호의 빈도수
-  const minFrequency = ref(0) // 최신 50회차 당첨번호 중 가장 적게 나온 번호의 빈도수
+  const mostFrequentNumbers = ref([]) // 최신 30회차 당첨번호 중 가장 많이 나온 번호
+  const leastFrequentNumbers = ref([]) // 최신 30회차 당첨번호 중 가장 적게 나온 번호
+  const maxFrequency = ref(0) // 최신 30회차 당첨번호 중 가장 많이 나온 번호의 빈도수
+  const minFrequency = ref(0) // 최신 30회차 당첨번호 중 가장 적게 나온 번호의 빈도수
   const hasStats = ref(false) // 통계 데이터 불러오기 성공 여부
 
   // 알림 메세지 설정
@@ -124,13 +124,13 @@ export const useLottoStore = defineStore('lotto', () => {
     }
   }
 
-  // 최신 50회차 당첨 번호 수집
-  const fetchLast50Draws = async () => {
+  // 최신 30회차 당첨 번호 수집
+  const fetchLast30Draws = async () => {
     try {
       isLoading.value = true
       const frequency = Array(45).fill(0)
 
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 30; i++) {
         const drawNumber = latestDrawNumber.value - i
         const data = await fetchLottoNumber(drawNumber)
 
@@ -162,9 +162,9 @@ export const useLottoStore = defineStore('lotto', () => {
     }
   }
 
-  // 최신 50회차 당첨번호 중 가장 많이 나온 번호와 가장 적게 나온 번호 찾기
+  // 최신 30회차 당첨번호 중 가장 많이 나온 번호와 가장 적게 나온 번호 찾기
   const getMostAndLeastFrequentNumbers = async () => {
-    const frequency = await fetchLast50Draws()
+    const frequency = await fetchLast30Draws()
 
     if (!frequency.length) {
       errorMsg.value = '데이터를 가져오는 데 실패했습니다.'
@@ -377,7 +377,7 @@ export const useLottoStore = defineStore('lotto', () => {
     openHistoryDialog,
     removeHistoryEntry,
     clearHistory,
-    fetchLast50Draws,
+    fetchLast30Draws,
     getMostAndLeastFrequentNumbers,
   }
 })
