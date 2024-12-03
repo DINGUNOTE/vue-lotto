@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { fetchLottoNumber } from '@/api'
 import { formatDate, formatCurrency, sortArr } from '@/utils'
@@ -35,6 +35,7 @@ export const useLottoStore = defineStore('lotto', () => {
   const leastFrequentNumbers = ref([]) // 최신 100회차 당첨번호 중 가장 적게 나온 번호
   const maxFrequency = ref(0) // 최신 100회차 당첨번호 중 가장 많이 나온 번호의 빈도수
   const minFrequency = ref(0) // 최신 100회차 당첨번호 중 가장 적게 나온 번호의 빈도수
+  const hasStats = ref(false) // 통계 데이터 불러오기 성공 여부
 
   // 알림 메세지 설정
   const setAlertMessage = (message) => {
@@ -70,6 +71,9 @@ export const useLottoStore = defineStore('lotto', () => {
           latestDrawNumber.value = mid
         } else {
           high = mid - 1
+
+          // API 요청 제한을 위해 50ms 대기
+          await new Promise((resolve) => setTimeout(resolve, 50))
         }
       }
 
@@ -144,8 +148,8 @@ export const useLottoStore = defineStore('lotto', () => {
             frequency[num - 1]++
           })
 
-          // API 요청 제한을 위해 10ms 대기
-          await new Promise((resolve) => setTimeout(resolve, 10))
+          // API 요청 제한을 위해 100ms 대기
+          await new Promise((resolve) => setTimeout(resolve, 100))
         }
       }
 
@@ -186,6 +190,7 @@ export const useLottoStore = defineStore('lotto', () => {
     leastFrequentNumbers.value = leastFrequent
     maxFrequency.value = maxFreq
     minFrequency.value = minFreq
+    hasStats.value = true
   }
 
   // 고정 번호 추가
@@ -331,10 +336,6 @@ export const useLottoStore = defineStore('lotto', () => {
     localStorage.setItem('history', JSON.stringify(history.value))
   }
 
-  watch(isFetched, (newVal) => {
-    console.log('isFetched changed:', newVal)
-  })
-
   return {
     lottoNumbers,
     bonusNumber,
@@ -346,6 +347,7 @@ export const useLottoStore = defineStore('lotto', () => {
     errorMsg,
     isLoading,
     isFetched,
+    hasStats,
     alertMessage,
     isShowAlert,
     isDrawOpen,

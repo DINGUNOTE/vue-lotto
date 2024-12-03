@@ -5,6 +5,9 @@ import { useLottoStore } from '@/stores'
 const lottoStore = useLottoStore()
 
 const fetchStatistics = async () => {
+  // 데이터가 존재하는 경우 다시 호출하지 않음
+  if (lottoStore.hasStats) return
+
   if (lottoStore.isFetched) {
     // 최신 당첨회차 정보가 있는 경우 통계 정보를 가져옴
     await lottoStore.getMostAndLeastFrequentNumbers()
@@ -18,8 +21,6 @@ const fetchStatistics = async () => {
 }
 
 onMounted(() => {
-  console.log(lottoStore.isFetched)
-
   fetchStatistics()
 })
 </script>
