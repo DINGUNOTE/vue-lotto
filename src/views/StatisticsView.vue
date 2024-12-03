@@ -26,7 +26,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="lottoStore.isLoading">통계를 불러오는 중입니다.</div>
+  <div v-if="lottoStore.isLoading">
+    최근 당첨 100회차의 통계를 불러오는 중입니다.
+  </div>
 
   <div v-else>
     <h3>최근 당첨 100회차 통계</h3>

@@ -72,8 +72,8 @@ export const useLottoStore = defineStore('lotto', () => {
         } else {
           high = mid - 1
 
-          // API 요청 제한을 위해 50ms 대기
-          await new Promise((resolve) => setTimeout(resolve, 50))
+          // API 요청 제한을 위해 100ms 대기
+          await new Promise((resolve) => setTimeout(resolve, 100))
         }
       }
 
