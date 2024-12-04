@@ -5,6 +5,7 @@ import FooterComponent from './components/FooterComponent.vue'
 import AlertComponent from './components/AlertComponent.vue'
 import DrawView from './views/DrawView.vue'
 import HistoryView from './views/HistoryView.vue'
+import LoaderComponent from './components/LoaderComponent.vue'
 </script>
 
 <template>
@@ -22,6 +23,7 @@ import HistoryView from './views/HistoryView.vue'
     <DrawView />
     <HistoryView />
     <AlertComponent />
+    <LoaderComponent />
   </v-app>
 </template>
 
