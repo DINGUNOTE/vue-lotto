@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useLottoStore } from '@/stores'
+import BallComponent from '@/components/BallComponent.vue'
 
 const lottoStore = useLottoStore()
 
@@ -26,29 +27,65 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="lottoStore.isLoading">
-    최근 당첨 10회차의 통계를 불러오는 중입니다.
+  <div v-if="lottoStore.isLoading" class="text-center">
+    최신 당첨 회차로부터 10회차까지의 통계를 가져오는 중입니다.
   </div>
 
   <div v-else>
-    <h3>최근 당첨 10회차 통계</h3>
-    <p>
-      가장 많이 나온 번호:
-      {{ lottoStore.mostFrequentNumbers }}
-    </p>
-    <p>
-      가장 적게 나온 번호:
-      {{ lottoStore.leastFrequentNumbers }}
-    </p>
-    <p>
-      가장 많이 나온 번호의 출현 횟수:
-      {{ lottoStore.maxFrequency }}
-    </p>
-    <p>
-      가장 적게 나온 번호의 출현 횟수:
-      {{ lottoStore.minFrequency }}
-    </p>
+    <v-list lines="two" class="lotto-stats">
+      <h1>최근 당첨 10회차 통계</h1>
+      <v-list-item title="가장 많이 나온 번호">
+        <ul>
+          <BallComponent
+            v-for="(number, index) in lottoStore.mostFrequentNumbers"
+            :key="index"
+            :number="number"
+          >
+            {{ number }}
+          </BallComponent>
+        </ul>
+      </v-list-item>
+
+      <v-list-item title="가장 적게 나온 번호">
+        <ul>
+          <BallComponent
+            v-for="(number, index) in lottoStore.leastFrequentNumbers"
+            :key="index"
+            :number="number"
+          >
+            {{ number }}
+          </BallComponent>
+        </ul>
+      </v-list-item>
+
+      <v-list-item title="가장 많이 나온 번호의 출현 횟수">
+        총 10회차 중 <strong>{{ lottoStore.maxFrequency }}</strong
+        >회
+      </v-list-item>
+
+      <v-list-item title="가장 적게 나온 번호의 출현 횟수">
+        총 10회차 중 <strong>{{ lottoStore.minFrequency }}</strong
+        >회
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.lotto-stats {
+  padding-top: 0;
+  text-align: center;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+</style>

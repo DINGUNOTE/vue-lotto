@@ -12,7 +12,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <p class="red">이전 회차 보기, 다음 회차 보기 기능 추가 예정</p>
   <section>
     <div v-if="lottoStore.isLoading" class="text-center">
       최신 회차를 검색중입니다.
@@ -90,7 +89,6 @@ onMounted(() => {
 
   ul {
     display: flex;
-    align-content: center;
     justify-content: center;
     gap: 0.5rem;
 
