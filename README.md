@@ -12,16 +12,16 @@ $ npm run dev
 
 # 1. Project Overview (프로젝트 개요)
 
-- Vue를 이용해서 로또 당첨 정보, 번호 추첨 앱 만들기
+- Vue를 활용해서 로또 당첨 정보, 번호 추첨 앱 만들기
 
 <br/>
 <br/>
 
 # 2. Key Features (주요 기능)
 
-1. 로또 당첨회차 당첨 정보 확인(회차 별로 확인하는 기능은 추후 추가 예정)
+1. 로또 당첨회차 당첨 정보 확인(회차 별로 확인하는 기능 추가 예정)
 2. 고정적으로 넣을 번호와, 제외할 번호를 골라서 로또 추천 번호 생성
-3. 최근 100회차 당첨 정보를 취합해서 가장 많이 나온 번호와 가장 적게 나온 번호 등 통계 확인(개발 예정)
+3. 통계 페이지에서 최근 10회차 당첨 결과에서 가장 많이 나온 번호와 가장 적게 나온 번호, 몇 회씩 등장했는지 확인할 수 있는 기능
 
 <br/>
 <br/>
@@ -58,6 +58,7 @@ project/
 │   │   ├── HeaderComponent.vue    - App Header 컴포넌트
 │   │   ├── AlertComponent.vue     - 알림 메세지 컴포넌트
 │   │   ├── BallComponent.vue      - 로또 공 컴포넌트
+│   │   ├── LoaderComponent.vue    - 로딩바 컴포넌트
 │   │   └── FooterComponent.vue    - App Footer 컴포넌트
 │   ├── router/                    # 페이지 라우팅 관리 폴더
 │   └── index.js                   - vue-router 설정 파일
@@ -71,6 +72,7 @@ project/
 │   │   ├── HomeView.vue           - 메인 페이지 컴포넌트(최신 회차 로또 당첨 번호 조회)
 │   │   ├── GetNumbersView.vue     - 로또 당첨 번호 뽑기 페이지 컴포넌트
 │   │   ├── DrawView.vue           - 로또 번호 추첨 결과 Dialog 컴포넌트
+│   │   ├── StasticsView.vue       - 통계보기 페이지 컴포넌트
 │   │   └── HistoryView.vue        - 로또 번호 추첨 결과 기록 Dialog 컴포넌트
 │   ├── App.vue                    # App Root vue 파일
 │   └── main.js                    # App Root js 파일
