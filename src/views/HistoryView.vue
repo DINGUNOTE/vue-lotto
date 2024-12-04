@@ -15,19 +15,21 @@ const lottoStore = useLottoStore()
           <li v-for="(entry, index) in lottoStore.history" :key="index">
             <span>{{ entry.dateTime }}</span>
 
-            <ul class="history-item">
-              <BallComponent
-                v-for="(number, index) in entry.numbers"
-                :key="index"
-                :number="number"
-              >
-                {{ number }}
-              </BallComponent>
-            </ul>
+            <div>
+              <ul class="history-item">
+                <BallComponent
+                  v-for="(number, index) in entry.numbers"
+                  :key="index"
+                  :number="number"
+                >
+                  {{ number }}
+                </BallComponent>
+              </ul>
 
-            <v-btn text @click="lottoStore.removeHistoryEntry(index)"
-              >삭제</v-btn
-            >
+              <v-btn text @click="lottoStore.removeHistoryEntry(index)"
+                >삭제</v-btn
+              >
+            </div>
           </li>
         </ul>
 
@@ -46,20 +48,38 @@ const lottoStore = useLottoStore()
 .history-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   max-height: 370px;
   overflow-y: auto;
 
   > li {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    gap: 0.5rem;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0 0.5rem;
+      width: 100%;
+
+      .v-btn {
+        flex-shrink: 0;
+        min-width: 50px;
+      }
+    }
   }
 }
 
 .history-item {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 0.5rem;
+  width: 100%;
 }
 </style>
