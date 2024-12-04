@@ -2,6 +2,9 @@
 import { RouterView } from 'vue-router'
 import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
+import AlertComponent from './components/AlertComponent.vue'
+import DrawView from './views/DrawView.vue'
+import HistoryView from './views/HistoryView.vue'
 </script>
 
 <template>
@@ -15,6 +18,10 @@ import FooterComponent from './components/FooterComponent.vue'
     </v-main>
 
     <FooterComponent />
+
+    <DrawView />
+    <HistoryView />
+    <AlertComponent />
   </v-app>
 </template>
 

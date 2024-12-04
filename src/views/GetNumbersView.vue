@@ -2,9 +2,6 @@
 import { ref } from 'vue'
 import { useLottoStore } from '@/stores'
 import BallComponent from '@/components/BallComponent.vue'
-import AlertComponent from '@/components/AlertComponent.vue'
-import DrawView from '@/views/DrawView.vue'
-import HistoryView from './HistoryView.vue'
 
 const lottoStore = useLottoStore()
 const fixedNumberInput = ref('')
@@ -111,10 +108,6 @@ const excludedNumberInput = ref('')
         >추천번호 추첨기록</v-btn
       >
     </div>
-
-    <DrawView />
-    <HistoryView />
-    <AlertComponent />
   </section>
 </template>
 

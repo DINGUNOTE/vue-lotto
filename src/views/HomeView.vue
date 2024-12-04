@@ -3,7 +3,6 @@ import { onMounted } from 'vue'
 import { useLottoStore } from '@/stores'
 
 import BallComponent from '@/components/BallComponent.vue'
-import AlertComponent from '@/components/AlertComponent.vue'
 
 const lottoStore = useLottoStore()
 
@@ -67,8 +66,6 @@ onMounted(() => {
       </div>
     </div>
   </section>
-
-  <AlertComponent />
 </template>
 
 <style lang="scss" scoped>
