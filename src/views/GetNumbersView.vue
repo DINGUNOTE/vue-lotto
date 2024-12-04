@@ -141,5 +141,7 @@ ul {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  padding: 1rem;
+  width: 100%;
 }
 </style>

@@ -47,15 +47,15 @@ const handleRemove = () => {
 li {
   position: relative;
   display: flex;
-  align-content: center;
+  align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+  width: 100%;
+  max-width: 3rem;
   color: #fff;
-  line-height: 3rem;
   font-weight: 600;
   text-shadow: 0px 0px 3px rgba(73, 57, 0, 0.8);
   border-radius: 50%;
+  aspect-ratio: 1 / 1;
 
   &.yellow {
     background-color: #fbc400;
